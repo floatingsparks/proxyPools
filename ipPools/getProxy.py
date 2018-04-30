@@ -29,7 +29,7 @@ class ProxyCrawl(object):
     @staticmethod
     def insertTodb(proxy):
         '''插入数据到mysql'''
-        db = pymysql.connect(host="localhost", user="root", password="1992825", db="proxy", charset="utf8")
+        db = pymysql.connect(host="localhost", user="root", password="123456", db="proxy", charset="utf8")
         cur = db.cursor()
         sql = 'insert into proxy(proxy)values(%s);'
         # lock = Lock()
