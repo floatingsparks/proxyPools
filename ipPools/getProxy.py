@@ -3,8 +3,10 @@ from lxml import etree
 import pymysql
 
 
+'''从目标网站获取代理'''
+
+
 class ProxyCrawl(object):
-	'''爬取代理并储存'''
     def __init__(self,):
         pass
 
@@ -18,7 +20,7 @@ class ProxyCrawl(object):
                 self.insertTodb(next(info))
         except Exception as e:
             print(e)
-
+			
     @staticmethod
     def proxy(ips, ports):
         '''使用生成器'''
@@ -31,18 +33,16 @@ class ProxyCrawl(object):
         '''插入数据到mysql'''
         db = pymysql.connect(host="localhost", user="root", password="123456", db="proxy", charset="utf8")
         cur = db.cursor()
-        sql = 'insert into proxy(proxy)values(%s);'
-        # lock = Lock()
-        # lock.acquire()
+        '''插入代理到主表，备用'''
+        sql = 'insert into proxy_main(proxy)values(%s);'
         cur.execute(sql, proxy)
-        # lock.release()
-        print('插入成功')
+        print('入库成功')
         db.commit()
         db.close()
 
 
 class Parse(object):
-	'''解析方法'''
+
     def __init__(self, ):
         pass
 
@@ -69,7 +69,6 @@ class Parse(object):
         ips = selector.xpath('//div[@id="list"]/table/tbody/tr/td[1]/text()')
         ports = selector.xpath('//div[@id="list"]/table/tbody/tr/td[2]/text()')
         return ips, ports
-
 
 
 
